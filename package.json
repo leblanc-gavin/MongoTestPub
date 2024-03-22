@@ -1,5 +1,5 @@
 {
-  "name": "ckMongoTest",
+  "name": "authentication",
   "version": "1.0.0",
   "description": "CKs Express Mongo Test on Render",
   "main": "authentication.js",
