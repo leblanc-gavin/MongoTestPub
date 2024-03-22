@@ -1,7 +1,7 @@
 const { MongoClient } = require("mongodb");
 
 // The uri string must be the connection string for the database (obtained on Atlas).
-const uri = "mongodb+srv://<user>:<password>@ckmdb.5oxvqja.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://testUser:Southeastern1!@cmps415db.bgdozem.mongodb.net/?retryWrites=true&w=majority&appName=cmps415db";
 
 // --- This is the standard stuff to get it to work on the browser
 const express = require('express');
@@ -18,15 +18,14 @@ app.use(express.urlencoded({ extended: true }));
 // Default route.
 // Provides a selection of routes to go to as links.
 app.get('/', function(req, res) {
-  var outstring = 'Default endpoint starting on date: ' + Date.now();
-  outstring += '<p><a href=\"./task1\">Go to Task 1</a>';
-  outstring += '<p><a href=\"./task2\">Go to Task 2</a>';
+  
   res.send(outstring);
 });
 
 app.get('/task1', function(req, res) {
   var outstring = 'Starting Task 1 on date: ' + Date.now();
   res.send(outstring);
+  run();
 });
 
 app.get('/task2', function(req, res) {
@@ -47,17 +46,18 @@ const client = new MongoClient(uri);
 
 async function run() {
   try {
-    const database = client.db('ckmdb');
-    const parts = database.collection('cmps415');
+    const database = client.db('gldb');
+    const parts = database.collection('authentication');
 
-    // Here we make a search query where the key is hardwired to 'partID' 
-    // and the value is picked from the input parameter that comes in the route
-     const query = { partID: req.params.item };
+    var username = prompt("Please enter your Username:");
+    var password = prompt("Please enter your Password:");
+
+     const query = { username: password };
      console.log("Looking for: " + query);
 
-    const part = await parts.findOne(query);
-    console.log(part);
-    res.send('Found this: ' + JSON.stringify(part));  //Use stringify to print a json
+    const match = await parts.findOne(query);
+    console.log(match);
+    res.send('Found this: ' + JSON.stringify(match));  //Use stringify to print a json
 
   } finally {
     // Ensures that the client will close when you finish/error
@@ -72,7 +72,7 @@ run().catch(console.dir);
 // Route to access database using two parameters:
 app.get('/api/mongo2/:inpkey&:item', function(req, res) {
 // access as ...app.github.dev/api/mongo2/partID&12345
-console.log("inpkey: " + req.params.inpkey + " item: " + req.params.item);
+console.log(": " + req.params.inpkey + " item: " + req.params.item);
 
 const client = new MongoClient(uri);
 
