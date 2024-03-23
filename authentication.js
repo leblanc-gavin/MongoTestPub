@@ -39,6 +39,7 @@ app.get('/', function(req, res) {
     }
 );
 
+//T2
 // Register route
 app.get('/register', function(req, res) {
     const outstring = `
@@ -52,6 +53,7 @@ app.get('/register', function(req, res) {
     res.send(outstring);
 });
 
+//T2
 // Insert register route
 app.post('/insertregister', function(req, res) {
     async function run() {
@@ -71,6 +73,7 @@ app.post('/insertregister', function(req, res) {
     run().catch(console.dir);
 });
 
+//T4
 // Active cookies route
 app.get('/activecookies', function(req, res) {
     const cookies = req.cookies;
@@ -86,6 +89,7 @@ app.get('/activecookies', function(req, res) {
     res.send(cookiesList);
 });
 
+//T5
 // Clear cookies route
 app.post('/clearcookies', function(req, res) {
     const tohome = `<a href="/">Back to Home</a>`;
@@ -101,6 +105,7 @@ app.post('/clearcookies', function(req, res) {
 app.post('/api/login', function(req, res) {
     async function run() {
         try {
+            //T3.2
             const database = client.db('gldb');
             const collection = database.collection('authentication');
             const query = { [req.body.username]: req.body.password };
@@ -116,6 +121,7 @@ app.post('/api/login', function(req, res) {
                 res.cookie(req.body.username + "Cookie", randomString, { maxAge: 60000, httpOnly: true });
                 
                 res.send(`Cookie for `+ req.body.username + ` was set for 1 minute <br> ${tocookielist} <br> ${tohome}`);
+                //T3.1
             } else {
                 res.status(401).send(`Invalid Username or Password <br> ${tocookielist} <br> ${tohome}`);
             }
