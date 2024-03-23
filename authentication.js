@@ -106,11 +106,14 @@ app.post('/api/login', function(req, res) {
             const query = { [req.body.username]: req.body.password };
             console.log("Looking for: " + query);
         
+
             const user = await authCollection.findOne(query);
             const tohome = `<a href="/">Back to Home</a>`;
             const tocookielist = `<a href="/activecookies">Show Cookies</a>`;
+            const randomString = Math.floor(10000000 + Math.random() * 90000000).toString().substring(0, 8);
+
             if (user) {
-                res.cookie(req.body.username + "Cookie", 'authenticated', { maxAge: 60000, httpOnly: true });
+                res.cookie(req.body.username + "Cookie", randomString, { maxAge: 60000, httpOnly: true });
                 
                 res.send(`Cookie for `+ req.body.username + ` was set for 1 minute <br> ${tocookielist} <br> ${tohome}`);
             } else {
