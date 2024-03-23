@@ -100,8 +100,10 @@ app.get('/activecookies', function(req, res) {
 app.post('/clearcookies', function(req, res) {
     const tohome = `<a href="/">Back to Home</a>`;
     const tocookielist = `<a href="/activecookies">Show Cookies</a>`;
-    var cookiename = req.body.username + "Cookie"
-    res.clearCookie(cookiename);
+    const cookies = req.cookies;
+    for (const cookieName in cookies) {
+        res.clearCookie(cookieName);
+    }
     res.send(`${tohome}<br>${tocookielist}`); 
 });
 
