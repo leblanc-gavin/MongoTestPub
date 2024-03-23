@@ -57,10 +57,10 @@ app.post('/insertregister', function(req, res) {
     async function run() {
         try {
             const database = client.db('gldb');
-            const authCollection = database.collection('authentication');
+            const collection = database.collection('authentication');
     
             const doc = { [req.body.username]: req.body.password };
-            const result = await authCollection.insertOne(doc);
+            const result = await collection.insertOne(doc);
             console.log(`New user registered with id ${result.insertedId}`);
             res.redirect('/');
         } catch (err) {
@@ -102,12 +102,12 @@ app.post('/api/login', function(req, res) {
     async function run() {
         try {
             const database = client.db('gldb');
-            const authCollection = database.collection('authentication');
+            const collection = database.collection('authentication');
             const query = { [req.body.username]: req.body.password };
             console.log("Looking for: " + query);
         
 
-            const user = await authCollection.findOne(query);
+            const user = await collection.findOne(query);
             const tohome = `<a href="/">Back to Home</a>`;
             const tocookielist = `<a href="/activecookies">Show Cookies</a>`;
             const randomString = Math.floor(10000000 + Math.random() * 90000000).toString().substring(0, 8);
