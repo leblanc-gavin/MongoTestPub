@@ -24,16 +24,6 @@ const client = new MongoClient(uri);
 
 // Default route
 app.get('/', function(req, res) {
-    const authCookie = req.cookies.authCookie;
-    if (authCookie) { 
-        // If authentication cookie exists
-        res.send(`
-            <h1>Login successful</h1>
-            <p>Cookie: ${authCookie}</p>
-            <a href="/activecookies">Show Cookies</a>
-        `);
-    } else {
-        // If authentication cookie doesn't exist
         const outstring = `
             <h1><i>Login</i></h1>
             <form action="/api/login" method="post">
@@ -47,7 +37,7 @@ app.get('/', function(req, res) {
         `;
         res.send(outstring);
     }
-});
+);
 
 // Register route
 app.get('/register', function(req, res) {
